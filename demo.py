@@ -47,7 +47,6 @@ if uploaded_file is not None:
         elif "results" in json_data.keys():
             references = json_data.get("results", [])
 
-
         try:
             dt_obj = datetime.fromisoformat(timestamp)
             timestamp_it = dt_obj.strftime("%d/%m/%Y %H:%M:%S")
