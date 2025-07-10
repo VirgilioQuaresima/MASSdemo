@@ -22,7 +22,7 @@ with col1:
     st.image("https://www.codertd.com/wp-content/uploads/2023/09/Logo_code_RTD.png",
              width=200)  # Cambia URL se hai un logo
 with col2:
-    st.markdown("#MASS")
+    st.markdown("# MASS")
     st.markdown("##### Multi Agent Scraping Service")
     st.markdown("##### By CoDeRTD")
 st.markdown("---")
