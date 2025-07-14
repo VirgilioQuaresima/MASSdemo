@@ -81,6 +81,7 @@ if uploaded_file is not None:
                         thumbnail_url = ref.get("thumbnail", "")
                     elif "thumbnail_url" in ref.keys():
                         thumbnail_url = ref.get("thumbnail_url", "")
+                        
                     else:
                         thumbnail_url = ""
 
