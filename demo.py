@@ -46,6 +46,8 @@ if uploaded_file is not None:
                 references = json_data['data'].get("videos", [])
         elif "results" in json_data.keys():
             references = json_data.get("results", [])
+        elif "unique_results" in json_data.keys():
+            references = json_data.get("unique_results", [])
 
         try:
             dt_obj = datetime.fromisoformat(timestamp)
@@ -75,7 +77,13 @@ if uploaded_file is not None:
                     st.markdown(f"{index}")
 
                 with thumb_col:
-                    thumbnail_url = ref.get("thumbnail_url", "")
+                    if "thumbnail" in ref.keys():
+                        thumbnail_url = ref.get("thumbnail", "")
+                    elif "thumbnail_url" in ref.keys():
+                        thumbnail_url = ref.get("thumbnail_url", "")
+                    else:
+                        thumbnail_url = ""
+
                     if thumbnail_url and is_valid_image_url(thumbnail_url):
                         st.image(thumbnail_url, width=120)
                     else:
