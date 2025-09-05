@@ -33,25 +33,24 @@ if uploaded_file is not None:
     try:
         json_data = dict(json.load(uploaded_file))
 
-        keyword = json_data.get("keyword", "")
+        keyword = json_data.get("name", "")
         domain = json_data.get("domain", "")
-        timestamp = json_data.get("timestamp", "")
+        timestamp = json_data.get("search_date", "")
         references = []
-        if "references" in json_data.keys():
-            references = json_data.get("references", [])
-        elif "data" in json_data.keys():
-            if "references" in json_data['data']:
-                references = json_data['data'].get("references", [])
-            elif "videos" in json_data['data']:
-                references = json_data['data'].get("videos", [])
-        elif "results" in json_data.keys():
+        if "results" in json_data.keys():
             references = json_data.get("results", [])
-        elif "unique_results" in json_data.keys():
-            references = json_data.get("unique_results", [])
+        # elif "data" in json_data.keys():
+        #     if "references" in json_data['data']:
+        #         references = json_data['data'].get("references", [])
+        #     elif "videos" in json_data['data']:
+        #         references = json_data['data'].get("videos", [])
+        # elif "results" in json_data.keys():
+        #     references = json_data.get("results", [])
+        # elif "unique_results" in json_data.keys():
+        #     references = json_data.get("unique_results", [])
 
         try:
-            dt_obj = datetime.fromisoformat(timestamp)
-            timestamp_it = dt_obj.strftime("%d/%m/%Y %H:%M:%S")
+            timestamp_it = timestamp
         except Exception:
             timestamp_it = "Formato non valido"
 
@@ -71,30 +70,48 @@ if uploaded_file is not None:
         for ref in references:
             index += 1
             with st.container():
-                index_col, thumb_col, info_col, link_col = st.columns(
-                    [0.1, 0.2, 0.6, 0.1])
+                index_col, sentiment_col, thumb_col, info_col, impact_col, summary_col, link_col = st.columns(
+                    [0.1, 0.1, 0.2, 0.6, 0.6, 0.6, 0.1])
                 with index_col:
                     st.markdown(f"{index}")
+
+                with sentiment_col:
+                    sentiment = ref.get("sentiment", "").lower()
+                    if sentiment == "positive":
+                        st.markdown("pos")
+                    elif sentiment == "negative":
+                        st.markdown("neg")
+                    elif sentiment == "neutral":
+                        st.markdown("neut")
+                    else:
+                        st.markdown("-")
 
                 with thumb_col:
                     if "thumbnail" in ref.keys():
                         thumbnail_url = ref.get("thumbnail", "")
                     elif "thumbnail_url" in ref.keys():
                         thumbnail_url = ref.get("thumbnail_url", "")
-                        
+
                     else:
                         thumbnail_url = ""
 
                     if thumbnail_url and is_valid_image_url(thumbnail_url):
                         st.image(thumbnail_url, width=120)
                     else:
-                        # Mostra un'immagine placeholder
                         st.image(
                             "https://via.placeholder.com/120x90?text=N/A", width=120)
 
                 with info_col:
                     st.markdown(f"**{ref.get('title', 'Senza titolo')}**")
                     st.markdown(f"{ref.get('content', '')}")
+
+                with impact_col:
+                    impact = ref.get("phrase", "")
+                    st.markdown(f"{impact}")
+
+                with summary_col:
+                    summary = ref.get("summary", "")
+                    st.markdown(f"{summary}")
 
                 with link_col:
                     url = ref.get("url", "#")
