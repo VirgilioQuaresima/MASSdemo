@@ -53,8 +53,8 @@ def demo(full_name: str, domain: str)-> dict:
         "results": search_results,
     }
 
-    with open(f"google/google_api_results_{full_name}_{domain_name}.json", "w") as f:
-        json.dump(file_json, f, indent=4)
+    # with open(f"google/google_api_results_{full_name}_{domain_name}.json", "w") as f:
+    #     json.dump(file_json, f, indent=4)
 
     random_index_list = [random.randint(
         0, len(search_results)-1) for _ in range(10)]
@@ -105,8 +105,8 @@ def demo(full_name: str, domain: str)-> dict:
         el['summary'] = analysis_results[final.index(el)]['summary']
         el['phrase'] = analysis_results[final.index(el)]['phrase']
 
-    with open(f"gpt/chatgpt_analysis_{full_name}_{domain_name}.json", "w") as f:
-        json.dump(analysis_results, f, indent=4)
+    # with open(f"gpt/chatgpt_analysis_{full_name}_{domain_name}.json", "w") as f:
+    #     json.dump(analysis_results, f, indent=4)
 
     final_urla = [el['url'] for el in final]
 
@@ -125,8 +125,8 @@ def demo(full_name: str, domain: str)-> dict:
         "search_date": datetime.today().strftime('%d-%m-%Y'),
         "results": search_results,
     }
-    with open(f"full/final_results_{full_name}_{domain_name}.json", "w") as f:
-        json.dump(stamp_json, f, indent=4)
+    # with open(f"full/final_results_{full_name}_{domain_name}.json", "w") as f:
+    #     json.dump(stamp_json, f, indent=4)
     
     return stamp_json
     # print("Risultati dell'analisi del sentiment:")

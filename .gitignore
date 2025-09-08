@@ -1,6 +1,6 @@
 .venv
 .env
-full
-google
-gpt
+full/*
+google/*
+gpt/*
 **/__pycache__
