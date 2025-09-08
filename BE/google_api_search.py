@@ -1,6 +1,6 @@
 """Google API Search module."""
 from googleapiclient.discovery import build
-from BE.config import Config
+from config import Config
 
 
 class GoogleAPI():

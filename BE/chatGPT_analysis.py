@@ -4,7 +4,7 @@ from openai import OpenAI
 import os
 import time
 import json
-from BE.config import Config
+from config import Config
 
 
 def extract_text(url):
