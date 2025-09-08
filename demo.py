@@ -1,9 +1,8 @@
 "DEMO STREAMLIT"
-
 import json
-from datetime import datetime
 import streamlit as st
 import requests
+from BE.demo import demo as be_demo
 
 
 def is_valid_image_url(url):
@@ -27,27 +26,31 @@ with col2:
     st.markdown("##### By CoDeRTD")
 st.markdown("---")
 
-uploaded_file = st.file_uploader("Carica file JSON", type="json")
+with st.form("search_form"):
+    name_input = st.text_input("Inserisci Nome Completo")
+    domain_input = st.text_input("Inserisci Dominio")
+    submitted = st.form_submit_button("Esegui Ricerca")
 
-if uploaded_file is not None:
+if submitted and name_input and domain_input:
+    json_data = be_demo(name_input, domain_input)
+else:
+    # Altrimenti carica file JSON
+    uploaded_file = st.file_uploader("Carica file JSON", type="json")
+    json_data = None
+    if uploaded_file is not None:
+        try:
+            json_data = dict(json.load(uploaded_file))
+        except Exception as e:
+            st.error("Errore durante la lettura del file JSON.")
+            st.exception(e)
+
+
+if json_data:
+    keyword = json_data.get("name", "")
+    domain = json_data.get("domain", "")
+    timestamp = json_data.get("search_date", "")
+    references = json_data.get("results", [])
     try:
-        json_data = dict(json.load(uploaded_file))
-
-        keyword = json_data.get("name", "")
-        domain = json_data.get("domain", "")
-        timestamp = json_data.get("search_date", "")
-        references = []
-        if "results" in json_data.keys():
-            references = json_data.get("results", [])
-        # elif "data" in json_data.keys():
-        #     if "references" in json_data['data']:
-        #         references = json_data['data'].get("references", [])
-        #     elif "videos" in json_data['data']:
-        #         references = json_data['data'].get("videos", [])
-        # elif "results" in json_data.keys():
-        #     references = json_data.get("results", [])
-        # elif "unique_results" in json_data.keys():
-        #     references = json_data.get("unique_results", [])
 
         try:
             timestamp_it = timestamp

@@ -1,2 +1,7 @@
 .venv
 .env
+full
+google
+gpt
+requirements.txt
+**/__pycache__
