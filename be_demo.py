@@ -5,9 +5,7 @@ from datetime import datetime
 import json
 import random
 from chatGPT_analysis import analysis
-from firecrawl_search import main as firecrawl_main
 from google_api_search import search_query, search_image_query
-from SearchBarFinder import trova_url_ricerca
 
 
 # 1. Estrazione dati da Google API
