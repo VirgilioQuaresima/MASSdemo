@@ -2,7 +2,7 @@
 import json
 import streamlit as st
 import requests
-from demo import demo as be_demo
+from BE.demo import demo as be_demo
 
 
 def is_valid_image_url(url):
